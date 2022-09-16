@@ -20,11 +20,10 @@ jobs:
         run: docker build --tag nuitka-test:latest .
       
       - name: Run Tests (Python)
-        env:
-          test_library: "/nuitka-test/test_library.so"
-        run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test nuitka-test:latest python3 nuitka-test.py
+        run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test --env test_library="/nuitka-test/test_library.so" nuitka-test:latest python3 nuitka-test.py
       
       - name: Run Tests (Compiled)
-        env:
-          test_library: "/nuitka-test/test_library.so"
-        run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test nuitka-test:latest ./nuitka-test.bin
+        run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test --env test_library="/nuitka-test/test_library.so" nuitka-test:latest ./nuitka-test.bin
+      
+      - name: Check Dependencies
+        run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test nuitka-test:latest ldd /nuitka-test/nuitka-test.bin  | grep -q libpython; test $? -eq 1
