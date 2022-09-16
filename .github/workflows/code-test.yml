@@ -18,9 +18,12 @@ jobs:
 
       - name: Build Image
         run: docker build --tag nuitka-test:latest .
-      
+
       - name: Run Tests (Python)
         run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test --env test_library="/nuitka-test/test_library.so" nuitka-test:latest python3 nuitka-test.py
+      
+      - name: Run Tests (Python)
+        run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test --env test_library="/nuitka-test/test_library.so" nuitka-test:latest ls -la /nuitka-test
       
       - name: Run Tests (Compiled)
         run: docker run --workdir /nuitka-test --volume ${{ github.workspace }}:/nuitka-test --env test_library="/nuitka-test/test_library.so" nuitka-test:latest ./nuitka-test.bin
