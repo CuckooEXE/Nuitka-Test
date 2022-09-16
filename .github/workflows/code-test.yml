@@ -1,0 +1,26 @@
+name: "Test Code"
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches: [ "main" ]
+
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Image
+        run: docker build --tag nuitka-test:latest .
+      
+      - name: Run Tests (Python)
+        run: docker run --workdir nuitka-test --volume ${{ github.workspace }}:/nuitka-test nuitka-test:latest test_library=/nuitka-test/test_library.so python3 nuitka-test.py
+      
+      - name: Run Tests (Compiled)
+        run: docker run --workdir nuitka-test --volume ${{ github.workspace }}:/nuitka-test nuitka-test:latest test_library=/nuitka-test/test_library.so ./nuitka-test.bin
