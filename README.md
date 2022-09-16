@@ -1,5 +1,6 @@
 # Nuitka Testing
 [![Test Code](https://github.com/CuckooEXE/Nuitka-Test/actions/workflows/code-test.yml/badge.svg)](https://github.com/CuckooEXE/Nuitka-Test/actions/workflows/code-test.yml)
+
 This is just a tiny repo to demonstrate how to compile a Python program to a statically-compiled C program that is capable of running on a system with no Python interpreter/libraries.
 
 ## Building
