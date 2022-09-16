@@ -32,4 +32,4 @@ WORKDIR /nuitka-test/
 # Install dependencies/Build dependencies/Build test
 RUN python3 -m pip install requests nuitka
 RUN gcc -shared test_library.c -o test_library.so
-# RUN python3 -m nuitka --static-libpython=yes --follow-imports nuitka-test.py
+RUN python3 -m nuitka --static-libpython=yes --follow-imports nuitka-test.py
