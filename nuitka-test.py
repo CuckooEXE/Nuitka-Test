@@ -1,3 +1,4 @@
+#!/usr/bin/env python3 
 """
 Nuitka Test - Test Nuitka with using various packages from Python to show functionality
 """
