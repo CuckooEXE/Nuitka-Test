@@ -29,5 +29,5 @@ jobs:
         run: |
           docker run --rm nuitka-test:latest cat /nuitka-test/nuitka-test.bin > ./nuitka-test.bin
           docker run --rm nuitka-test:latest cat /nuitka-test/test_library.so > ./test_library.so
-          docker run --volume $PWD/test_library.so:/tmp/test_library.so --volume $PWD/nuitka-test.bin:/tmp/nuitka-test.bin --env test_library="/tmp/test_library.so" alpine:latest /tmp/nuitka-test.bin
+          docker run --volume $PWD/test_library.so:/tmp/test_library.so --volume $PWD/nuitka-test.bin:/tmp/nuitka-test.bin --env test_library="/tmp/test_library.so" alpine:latest ls -la /tmp/
           
