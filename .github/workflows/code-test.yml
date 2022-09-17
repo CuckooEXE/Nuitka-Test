@@ -26,4 +26,8 @@ jobs:
         run: docker run --workdir /nuitka-test --env test_library="/nuitka-test/test_library.so" nuitka-test:latest ./nuitka-test.bin
       
       - name: Check Dependencies
-        run: docker run --workdir /nuitka-test nuitka-test:latest ldd /nuitka-test/nuitka-test.bin  | grep -q libpython; test $? -eq 1
+        run: |
+          docker run --rm --entrypoint nuitka-test:latest cat /nuitka-test/nuitka-test.bin > ./nuitka-test.bin
+          docker run --rm --entrypoint nuitka-test:latest cat /nuitka-test/test_library.so > ./test_library.so
+          docker run --volume $PWD/test_library.so:/tmp/test_library.so --volume $PWD/nuitka-test.bin:/tmp/nuitka-test.bin --env test_library="/tmp/test_library.so" alpine:latest /tmp/nuitka-test.bin
+          
