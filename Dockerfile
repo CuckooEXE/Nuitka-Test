@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+ENV test_library="/nuitka-test/test_library.so"
+
 # Add required packages to build python with all extensions
 RUN apk --no-cache add coreutils git gcc musl make  \
                        build-base \
@@ -15,7 +17,8 @@ RUN apk --no-cache add coreutils git gcc musl make  \
                        tcl-dev \
                        openssl \
                        openssl-dev \
-                       libffi-dev
+                       libffi-dev \
+                       patchelf
 
 # Clone the Python project
 RUN git clone -b 3.10 https://github.com/python/cpython.git /cpython/
@@ -32,4 +35,4 @@ WORKDIR /nuitka-test/
 # Install dependencies/Build dependencies/Build test
 RUN python3 -m pip install requests nuitka
 RUN gcc -shared test_library.c -o test_library.so
-# RUN python3 -m nuitka --static-libpython=yes --follow-imports nuitka-test.py
+RUN python3 -m nuitka --static-libpython=yes --standalone --onefile nuitka-test.py
