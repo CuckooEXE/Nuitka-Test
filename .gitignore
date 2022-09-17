@@ -2,6 +2,7 @@
 .vscode/
 *.bin
 *.build/
+*.dist/
 *.so
 .DS_Store
 
